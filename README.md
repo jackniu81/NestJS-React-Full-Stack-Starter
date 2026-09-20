@@ -12,6 +12,7 @@ A full-stack starter: a **NestJS** API that also hosts a compiled **React** (Vit
 | Client   | React 19 + Vite 8 + TypeScript            |
 | Styling  | Tailwind CSS 4                            |
 | Routing  | React Router 8                            |
+| HTTP     | Axios 1                                   |
 | Monorepo | npm workspaces (`server/`, `client/`)     |
 
 ## Requirements
@@ -64,7 +65,7 @@ node-react/
       ├─ App.tsx           # routes
       ├─ components/Layout.tsx
       ├─ pages/{Welcome,About,NotFound}.tsx
-      └─ lib/api.ts        # fetchVersion()
+      └─ lib/api.ts        # axios instance + fetchVersion()
 ```
 
 ## API

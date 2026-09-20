@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export interface ApiVersion {
   name: string;
   version: string;
@@ -9,12 +11,13 @@ export interface ApiVersion {
 // In prod, the same origin serves both, so a relative base works for both.
 const API_BASE = import.meta.env.VITE_API_BASE ?? '/api';
 
+const http = axios.create({
+  baseURL: API_BASE,
+  headers: { Accept: 'application/json' },
+});
+
 export async function fetchVersion(): Promise<ApiVersion> {
-  const res = await fetch(`${API_BASE}/version`, {
-    headers: { Accept: 'application/json' },
-  });
-  if (!res.ok) {
-    throw new Error(`API responded with ${res.status} ${res.statusText}`);
-  }
-  return (await res.json()) as ApiVersion;
+  // axios throws on non-2xx responses, no manual res.ok check needed
+  const { data } = await http.get<ApiVersion>('/version');
+  return data;
 }
