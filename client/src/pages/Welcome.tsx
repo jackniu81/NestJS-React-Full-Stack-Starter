@@ -1,34 +1,36 @@
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
+import { Button, Card, Space, Typography } from 'antd';
+
+const { Title, Paragraph, Text } = Typography;
 
 export default function Welcome() {
+  const navigate = useNavigate();
+
   return (
-    <section className="space-y-6">
-      <div className="space-y-2">
-        <h1 className="text-4xl font-bold tracking-tight">
-          Welcome 👋 !
-        </h1>
-        <p className="max-w-prose text-slate-600">
-          A full-stack starter: a <strong>NestJS</strong> API that also hosts
-          this <strong>React</strong> client (built with <strong>Vite</strong>{' '}
-          and styled with <strong>Tailwind CSS</strong>).
-        </p>
+    <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <div>
+        <Title level={1}>Welcome 👋 !</Title>
+        <Paragraph type="secondary">
+          A full-stack starter: a <Text strong>NestJS</Text> API that also
+          hosts this <Text strong>React</Text> client (built with{' '}
+          <Text strong>Vite</Text> and styled with <Text strong>Ant Design</Text>
+          ).
+        </Paragraph>
       </div>
 
-      <div className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="mb-2 font-semibold">What&apos;s inside</h2>
-        <ul className="list-inside list-disc space-y-1 text-slate-600">
-          <li>Sample API: <code className="rounded bg-slate-100 px-1">GET /api/version</code></li>
+      <Card title="What's inside" bordered>
+        <ul style={{ margin: 0, paddingLeft: 20 }}>
+          <li>
+            Sample API: <Text code>GET /api/version</Text>
+          </li>
           <li>Two pages wired with React Router</li>
           <li>Dev proxy so the client can hit the API server easily</li>
         </ul>
-      </div>
+      </Card>
 
-      <Link
-        to="/about"
-        className="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
-      >
+      <Button type="primary" onClick={() => navigate('/about')}>
         View API version →
-      </Link>
-    </section>
+      </Button>
+    </Space>
   );
 }

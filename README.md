@@ -1,6 +1,6 @@
 # NestJS + React Full Stack Starter
 
-A full-stack starter: a **NestJS** API that also hosts a compiled **React** (Vite + Tailwind) client — single-service deployment.
+A full-stack starter: a **NestJS** API that also hosts a compiled **React** (Vite + Ant Design) client — single-service deployment.
 
 *Release: 2026.09*
 
@@ -10,7 +10,7 @@ A full-stack starter: a **NestJS** API that also hosts a compiled **React** (Vit
 | -------- | ----------------------------------------- |
 | Server   | NestJS 12 + TypeScript (Express 5)        |
 | Client   | React 19 + Vite 8 + TypeScript            |
-| Styling  | Tailwind CSS 4                            |
+| Styling  | Ant Design 5                            |
 | Routing  | React Router 8                            |
 | HTTP     | Axios 1                                   |
 | Monorepo | npm workspaces (`server/`, `client/`)     |

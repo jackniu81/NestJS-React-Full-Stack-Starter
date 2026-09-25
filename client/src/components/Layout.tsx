@@ -1,43 +1,55 @@
 import type { ReactNode } from 'react';
-import { NavLink } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
+import { Layout as AntLayout, Menu, Typography } from 'antd';
 
-const navClass = ({ isActive }: { isActive: boolean }) =>
-  [
-    'px-3 py-2 rounded-md text-sm font-medium transition-colors',
-    isActive
-      ? 'bg-slate-900 text-white'
-      : 'text-slate-600 hover:bg-slate-100',
-  ].join(' ');
+const { Header, Content, Footer } = AntLayout;
+
+const menuItems = [
+  { key: '/', label: 'Welcome' },
+  { key: '/about', label: 'About' },
+];
 
 export default function Layout({ children }: { children: ReactNode }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const selectedKey =
+    location.pathname === '/about' ? '/about' : '/';
+
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50 text-slate-900">
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3">
-          <span className="text-lg font-semibold tracking-tight">
-            NestJS + React
-          </span>
-          <nav className="flex gap-1">
-            <NavLink to="/" end className={navClass}>
-              Welcome
-            </NavLink>
-            <NavLink to="/about" className={navClass}>
-              About
-            </NavLink>
-          </nav>
-        </div>
-      </header>
+    <AntLayout style={{ minHeight: '100vh' }}>
+      <Header
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: 24,
+          paddingInline: 24,
+        }}
+      >
+        <Typography.Title
+          level={4}
+          style={{ color: '#fff', margin: 0, whiteSpace: 'nowrap' }}
+        >
+          NestJS + React
+        </Typography.Title>
+        <Menu
+          theme="dark"
+          mode="horizontal"
+          selectedKeys={[selectedKey]}
+          items={menuItems}
+          style={{ flex: 1, minWidth: 0 }}
+          onClick={({ key }) => navigate(key)}
+        />
+      </Header>
 
-      <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-10">
-        {children}
-      </main>
+      <Content style={{ padding: '48px 24px' }}>
+        <div style={{ maxWidth: 768, margin: '0 auto' }}>{children}</div>
+      </Content>
 
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-3 text-xs text-slate-500">
-          <span>NestJS + React Full Stack Starter · v{__APP_VERSION__}</span>
-          <span title="Build timestamp">2026.09 · built {__BUILD_TIME__}</span>
-        </div>
-      </footer>
-    </div>
+      <Footer style={{ textAlign: 'center', color: 'rgba(0,0,0,0.45)' }}>
+        NestJS + React Full Stack Starter · v{__APP_VERSION__} ·{' '}
+        {__BUILD_TIME__}
+      </Footer>
+    </AntLayout>
   );
 }
