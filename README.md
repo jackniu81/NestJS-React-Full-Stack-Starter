@@ -10,7 +10,7 @@ A full-stack starter: a **NestJS** API that also hosts a compiled **React** (Vit
 | -------- | ----------------------------------------- |
 | Server   | NestJS 12 + TypeScript (Express 5)        |
 | Client   | React 19 + Vite 8 + TypeScript            |
-| Styling  | Ant Design 5                            |
+| Styling  | Ant Design 5 (antd)                     |
 | Routing  | React Router 8                            |
 | HTTP     | Axios 1                                   |
 | Monorepo | npm workspaces (`server/`, `client/`)     |
@@ -41,6 +41,16 @@ npm run start:prod
 
 In production the NestJS server serves the compiled React app from `client/dist` and exposes the API under `/api`. SPA deep links (e.g. a refresh on `/about`) fall back to `index.html`.
 
+## Build & bundle
+
+The UI is styled with **Ant Design** (no CSS framework/plugin is wired into Vite). Since `antd` is fairly large, `client/vite.config.ts` splits third-party code into stable chunks via `build.rollupOptions.output.manualChunks`:
+
+- `react` — react / react-dom / scheduler / react-router
+- `antd` — antd / @ant-design / rc-*
+- `vendor` — remaining deps (e.g. axios)
+
+This keeps every chunk under the 500 kB warning threshold and lets vendor code cache independently of app code.
+
 ## Scripts
 
 | Command             | Description                                      |
@@ -61,7 +71,9 @@ node-react/
 │     ├─ app.module.ts
 │     └─ version/          # GET /api/version
 └─ client/                 # React (Vite) app
+   ├─ vite.config.ts       # react plugin + manualChunks (react/antd/vendor)
    └─ src/
+      ├─ main.tsx          # ConfigProvider + BrowserRouter
       ├─ App.tsx           # routes
       ├─ components/Layout.tsx
       ├─ pages/{Welcome,About,NotFound}.tsx
